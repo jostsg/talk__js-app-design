@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>JavaScript Application Design</title>
+    
+    <link href="slideshow.css" rel="stylesheet" />
+    <link href="theme.css" rel="stylesheet" />
+    <link href="talk.css" rel="stylesheet" />
+    <script src="prefixfree.min.js"></script>
+</head>
+<body data-duration="120">
+
+<header id="intro" class="slide minigun">
+    <h1>JavaScript</h1>
+</header>
+
+
+<section>
+    <section>
+        <section class="slide">
+            <h2>Simon Jost</h2>
+            <ul>
+                <li>Front-end Architect</li>
+                <li>HolidayCheck AG</li>
+            </ul>
+            <p><img src="http://cdn2.business2community.com/wp-content/uploads/2011/08/twitter-icon-sketch.jpg" width="30px" /> @jostsg</p>
+        </section>
+    </section>
+    <section class="slide">
+        <h2>About this talk</h2>
+        <ul>
+            <li>JavaScript (incl. Node.js)</li>
+            <li>Architecture</li>
+            <li>Integration</li>
+            <li>Workflow</li>
+            <li>Lessons Learned (Summary)</li>
+            <li>Tips &amp; Advice</li>
+        </ul>
+    </section>
+    
+    <header class="slide jik" title="JavaScript"></header>
+
+    <header class="slide" title="JavaScript">
+        <h1>It's in the browser</h1>
+        <!--
+        "Alternativlos"
+        -->
+    </header>
+
+    <header class="slide" title="JavaScript">
+        <h1 id="h_accessible">It's accessible</h1>
+        <script>window.roll = function() { document.getElementById( "h_accessible" ).className += "roll" }</script>
+    </header>
+
+    <header class="slide" title="JavaScript">
+        <h1>So what can we do with it?</h1>
+    </header>
+
+    <header class="slide">
+        <h1>Client-side rendering</h1>
+    </header>
+
+    <section class="slide">
+        <h2>but...</h2>
+        <div class="center"><img src="img/seo-meme.jpg" /></div>
+    </section>
+
+    <header class="slide">
+        <h1>Shared Code</h1>
+    </header>
+
+    <section class="slide">
+        <h2>Shared Code</h2>
+        <ul>
+            <li>Node.js</li>
+            <li>Browser</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Challenges</h2>
+        <ul>
+            <li>DOM</li>
+            <li>Templating</li>
+            <li>Routing</li>
+            <li>Requests</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Server-side DOM</h2>
+        <div class="center"><img src="img/bullshit.jpg" /></div>
+    </section>
+
+    <section class="slide">
+        <h2>Server-side DOM</h2>
+        <ul>
+            <li>Cheerio: <a href="https://github.com/MatthewMueller/cheerio">https://github.com/MatthewMueller/cheerio</a></li>
+            <li>Domino: <a href="https://github.com/fgnass/domino">https://github.com/fgnass/domino</a></li>
+            <li>jsdom: <a href="https://github.com/tmpvar/jsdom">https://github.com/tmpvar/jsdom</a></li>
+            <li>PhantomJS: <a href="http://phantomjs.org/">http://phantomjs.org/</a></li>
+        </ul>
+    </section>
+
+    <header class="slide">
+        <h1>Build a framework</h1>
+    </header>
+
+    <section class="slide">
+        <h2>Architecture</h2>
+        <div class="center"><img src="img/architecture.png" /></div>
+    </section>
+
+    <section class="slide">
+        <h2>Core</h2>
+        <pre><code lang="javascript">{
+    module: function ( module ) {
+        module( /* sandbox */ );
+    },
+    templates: function ( templatesDir ) {
+        /* register templates */
+    },
+    run: function () { /* start */ }
+}</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>Sandbox</h2>
+        <pre><code lang="javascript">{
+    router: { /* Router */ },
+
+    templates: { /* Templates */ },
+
+    http: { /* Http */ }
+}</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>App</h2>
+        <pre><code lang="javascript">function MyApp ( framework ) {
+    framework.module( myModule );
+}
+
+function myModule ( sandbox ) {
+    // code...
+}</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>Server</h2>
+        <pre><code lang="javascript">module.exports.module = function ( module ) {
+    var sandbox = /* sandbox factory */;
+    module( sandbox );
+}</code></pre>
+    </section>
+
+    <section class="slide">
+        <!-- maintainable javascript -->
+        <blockquote>"Just because JavaScript is classless, doesn't mean you have to be" - Nicholas Zakas</blockquote>
+    </section>
+
+    <section class="slide">
+        <blockquote>"Fake it, until you make it" - @noBackend</blockquote>
+    </section>
+
+    <section class="slide">
+        <h2>History</h2>
+        <ul>
+            <li class="delayed">I had to create a presentation for my talk at <a href="http://front-trends.com">Front Trends 2010</a></li>
+            <li class="delayed">The only web-based presentation systems I knew of didn't fit my needs</li>
+            <li class="delayed">&hellip;so I rolled up my own</li>
+            <li class="delayed">FT2010 attendees asked me to release it</li>
+            <li class="delayed">and here it is! ;-)</li>
+        </ul>
+    </section>
+    
+    <section class="slide" id="navigation">
+        <h2>Navigation</h2>
+        <p>Only through keyboard for now :(</p>
+        <ul>
+            <li>→ or ↓ to advance to the next slide or incrementally displayed item</li>
+            <li>← or ↑ to go to the previous slide or incrementally displayed item</li>
+            <li>Ctrl* + → or Ctrl* + ↓ to jump to the next slide</li>
+            <li>Ctrl* + ← or Ctrl* + ↑ to jump to the previous slide</li>
+            <li>Home to go to the first slide, End to go to the last</li>
+            <li>Ctrl* + G to jump to an arbitrary slide (by slide number or identifier)</li>
+        </ul>
+        <p>* Ctrl or Shift actually. Only Shift works in Opera.</p>
+    </section>
+</section>
+
+<section>
+    <header class="slide">
+        <h1>Features</h1>
+    </header>
+    
+    <section class="slide">
+        <h2>Thumbnail view</h2>
+        <p>Press Ctrl+H (or Shift+H if you're in Opera) now.</p>
+        <p class="delayed">Cool, huh? You can press Ctrl+Shift+H to see all slides (warning: can be slow!)</p>
+    </section>
+    
+    <section class="slide">
+        <h2>Timer</h2>
+        <ul>
+            <li>Timer in the form of a progress bar on the top</li>
+            <li>Define the talk duration with the attribute <code>data-duration</code> on the <code>body</code></li>
+            <li>Style the timer and the end state with the selectors <code>#timer</code> and <code>#timer.end</code> respectively.</li>
+        </ul>
+    </section>
+    
+    <section class="slide">
+        <h2>Presenter view</h2>
+        <p>This slide has presenter notes. They are only visible in presenter view (Ctrl+P or Shift+P).</p>
+        <p class="presenter-notes">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </section>
+    
+    <section class="slide">
+        <style scoped>
+            h2 {
+                font-size: 200%;
+                font-weight: bold;
+            }
+        </style>
+        <h2><code>&lt;style scoped /&gt;</code></h2>
+        <p>You can use the HTML5 <code>scoped</code> attribute on style elements in slides, to only style the current slide or inside sections that include multiple slides to style all of them and nothing else.</p>
+        <p>For example, inspect this slide and then run <code>$$('style[scoped]')[0].sheet.cssRules[0].selectorText</code> in the console to see how the original selector gets changed.</p>
+    </section>
+    
+    <section class="slide">
+        <h2>More features</h2>
+        <ul>
+            <li class="delayed">IDs are dynamically assigned by JavaScript&hellip;</li>
+            <li class="delayed">&hellip;but you can also assign your own, bringing the best of both worlds</li>
+            <li class="delayed">Incremental display of slide contents (just add <code>class="delayed"</code>)</li>
+            <li class="delayed">Slide scaling based on window size (size everything you want to be scalable in ems)</li>
+            <li class="delayed">Document.title changing according to slide title (fetched either from the <code>title</code> attribute or the slide's heading)</li>
+        </ul>
+    </section>
+    
+    <section class="slide">
+        <h2>Drawbacks</h2>
+        <ul>
+            <li>Only supports modern browsers. Why?
+                <ul>
+                    <li>More lightweight</li>
+                    <li>Easier to understand code</li>  
+                    <li>It's a presentation, so the environment is controlled anyway</li>
+                </ul>
+            </li>
+            <li>No mouse click to advance to the next slide. I consider it annoying.</li>
+            <li>Doesn't work in mobile :(</li>
+        </ul>
+    </section>
+</section>
+
+<section>
+    <header class="slide">
+        <h1>Plugins</h1>
+    </header>
+    
+    <section class="slide">
+        <h2>Plugin: CSS Snippets</h2>
+        <pre>new CSSSnippet(document.getElementById('snippet'));</pre>
+        <ul>
+            <li>Dynamically edit CSS and reflect the results in any element's style
+                <ul>
+                    <li>Which one? Specify a selector with the <code>data-subject</code> attribute or leave blank for the slide to be the subject</li>
+                </ul>
+            <li>Automatically prefixes CSS3 properties/values, when needed
+                <ul>
+                    <li>Also does it with the style attribute (statically) if the element is not a text field (doesn't work in IE and Firefox 3.6)</li>
+                </ul>
+            </li>
+            <li>Textarea automatically adjusts rows/font-size on line break (use class <code>dont-adjust</code> to turn off)</li>
+        </ul>
+    </section>
+    
+    <section class="slide">
+        <h2>CSS Snippets demo</h2>
+        <p>Edit the following CSS code:</p>
+        <textarea class="snippet">background-color:red;
+background-image: linear-gradient(red, #600)</textarea>
+    </section>
+    
+    <section class="slide" id="animation-demo">
+        <h2>CSS Snippets: raw CSS</h2>
+        <textarea class="snippet" data-raw>@keyframes rainbow {
+    from, to { background: red }
+    16% { background: yellow }
+    33% { background: green }
+    50% { background: aqua }
+    66% { background: blue }
+    83% { background: fuchsia }
+}
+
+#animation-demo { animation: 30s rainbow infinite; }</textarea>
+    </section>
+    
+    <section class="slide">
+        <h2>Plugin: CSS Controls</h2>
+        <ul>
+            <li>Use sliders and other controls to adjust CSS values
+                <ul>
+                    <li>Which one? Specify a selector with the <code>data-subject</code> attribute or leave blank for the slide to be the subject</li>
+                    <li>Specify style with <code>data-style</code> (use <code>{value}</code> where the result will be)</li>
+                </ul>
+            <li>Automatically prefixes CSS3 properties/values, when needed</li>
+        </ul>
+    </section>
+    
+    <section class="slide" id="css-controls-demo">
+        <h2>CSS Controls demo</h2>
+        <label>Slide lightness: 
+            <input type="range" min="0" max="255" value="128" data-style="background-color:rgb({value}, {value}, {value});" class="css-control" />
+        </label>
+        <label>
+            border-width:
+            <input type="number" min="0" max="60" value="30" data-style="border-width: {value}px;" class="css-control" size="5" />
+        </label>
+        <label>
+            font-family:
+            <select data-style="font-family: {value};" class="css-control">
+                <option selected>sans-serif</option>
+                <option>Georgia, serif</option>
+                <option>Consolas, monospace</option>
+                <option>'Trebuchet MS', sans-serif</option>
+            </select>
+        </label>
+    </section>
+    
+    <section class="slide">
+        <h2>Plugin: Code highlight</h2>
+        <ul>
+            <li>Syntax highlighting for every <code>&lt;code&gt;</code> element with a <code>lang</code> attribute.</li>
+            <li>Only highlights when the slide becomes active, for performance</li>
+            <li>Currently only supports JavaScript, but it's easy to add any language</li>
+            <li>Styling done through easy to understand classes like <code>.string</code> or <code>.comment</code></li>
+        </ul>
+    </section>
+    
+    <section class="slide">
+        <h2>Code highlight example</h2>
+        <pre><code lang="javascript">$( "body" ).addClass( "roll" );</code><code>$( "body" ).addClass( "roll" );</code></pre>
+    </section>
+</section>
+<footer class="slide" title="The End">
+    <h2>Thank you!</h2>
+    <p>Get it or contribute at <a href="http://github.com/LeaVerou/CSSS">http://github.com/LeaVerou/CSSS</a></p>
+    <p>Credits:</p>
+    <ul>
+        <li><a href="http://lukeroberts.us/2008/12/wallpaper-colourful-wood/">Colored wood background by Luke Roberts</a></li>
+        <li>The name CSSS is actually inspired by S5, as you could probably guess ;-)</li>
+        <li>A big thanks to the community at Github for various contributions to this project</li>
+    </ul>
+</footer>
+
+<script src="slideshow.js"></script>
+<script src="plugins/css-edit.js"></script>
+<script src="plugins/css-snippets.js"></script>
+<script src="plugins/css-controls.js"></script>
+<script src="plugins/code-highlight.js"></script>
+<script>
+var slideshow = new SlideShow();
+
+var snippets = document.querySelectorAll('.snippet');
+for(var i=0; i<snippets.length; i++) {
+    new CSSSnippet(snippets[i]);
+}
+
+var cssControls = document.querySelectorAll('.css-control');
+for(var i=0; i<cssControls.length; i++) {
+    new CSSControl(cssControls[i]);
+}
+</script>
+    
+</body>
+</html>
