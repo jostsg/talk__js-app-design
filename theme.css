@@ -182,7 +182,7 @@ section > header.slide {
 }
 
 .slide .emphasis::before {
-	content: '\279C';
+	/*content: '\279C';*/
 	color: rgba(255,255,255,.5);
 	float: left;	
 	width: .75em;

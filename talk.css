@@ -1,11 +1,10 @@
 #intro h1 {
 	width: 80%;
-	font-size: 6rem;
-	min-height: 500px;
-	margin: 5% auto 0;
+	font-size: 10rem;
+	min-height: 300px;
+	margin: 10% auto 0;
 	text-align: center;
 }
-
 
 #css-controls-demo label {
 	display: block;
@@ -43,3 +42,18 @@
 }
 
 .center { text-align: center }
+
+section > header.chapter {
+	font-weight: bold;
+	background: none;
+	background-color: none;
+}
+
+.header__code {
+	font-size: 4rem;
+	margin: 20% auto;
+	background: none;
+	border: none;
+	text-align: center;
+	box-shadow: none;
+}

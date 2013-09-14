@@ -10,88 +10,67 @@
     <link href="talk.css" rel="stylesheet" />
     <script src="prefixfree.min.js"></script>
 </head>
-<body data-duration="120">
+<body data-duration="90">
 
-<header id="intro" class="slide minigun">
+<header id="intro" class="slide">
     <h1>JavaScript</h1>
 </header>
 
 
 <section>
-    <section>
-        <section class="slide">
-            <h2>Simon Jost</h2>
-            <ul>
-                <li>Front-end Architect</li>
-                <li>HolidayCheck AG</li>
-            </ul>
-            <p><img src="http://cdn2.business2community.com/wp-content/uploads/2011/08/twitter-icon-sketch.jpg" width="30px" /> @jostsg</p>
-        </section>
-    </section>
-    <section class="slide">
-        <h2>About this talk</h2>
-        <ul>
-            <li>JavaScript (incl. Node.js)</li>
-            <li>Architecture</li>
-            <li>Integration</li>
-            <li>Workflow</li>
-            <li>Lessons Learned (Summary)</li>
-            <li>Tips &amp; Advice</li>
-        </ul>
-    </section>
-    
     <header class="slide jik" title="JavaScript"></header>
-
-    <header class="slide" title="JavaScript">
-        <h1>It's in the browser</h1>
-        <!--
-        "Alternativlos"
-        -->
-    </header>
 
     <header class="slide" title="JavaScript">
         <h1 id="h_accessible">It's accessible</h1>
         <script>window.roll = function() { document.getElementById( "h_accessible" ).className += "roll" }</script>
     </header>
 
-    <header class="slide" title="JavaScript">
-        <h1>So what can we do with it?</h1>
+    <header class="slide">
+        <h1>It's in the browser</h1>
     </header>
 
     <header class="slide">
-        <h1>Client-side rendering</h1>
+        <blockquote>"Alternativlos" - Angela Merkel</blockquote>
+    </header>
+
+    <header class="slide">
+        <pre class="header__code"><code lang="javascript">JS.everywhere();</code></pre>
+        <!-- obvious question:
+             when we have it to use in one place, can we use it in the other?
+             can we replace server-side rendering and do it ? -->
     </header>
 
     <section class="slide">
-        <h2>but...</h2>
+        <h2>Yes, but...</h2>
         <div class="center"><img src="img/seo-meme.jpg" /></div>
     </section>
 
-    <header class="slide">
+    <header class="slide chapter">
         <h1>Shared Code</h1>
+        <!-- Run Code on server & in the browser -->
+    </header>
+
+    <header class="slide">
+        <blockquote>"Just run the code through Node.js" - Simon Jost</blockquote>
+        <!-- Naive me in 2011 -->
     </header>
 
     <section class="slide">
-        <h2>Shared Code</h2>
+        <h2>Issues</h2>
         <ul>
-            <li>Node.js</li>
-            <li>Browser</li>
-        </ul>
-    </section>
-
-    <section class="slide">
-        <h2>Challenges</h2>
-        <ul>
-            <li>DOM</li>
-            <li>Templating</li>
-            <li>Routing</li>
-            <li>Requests</li>
+            <li class="delayed">Routing</li>
+            <li class="delayed">Requests</li>
+            <li class="delayed">Rendering</li>
+            <li class="delayed">DOM</li>
         </ul>
     </section>
 
     <section class="slide">
         <h2>Server-side DOM</h2>
         <div class="center"><img src="img/bullshit.jpg" /></div>
+        <!-- it's bullshit, because it's slow
+             but it's less complex for app devs -->
+        <!-- DOM introduces a server-side global -->
     </section>
 
     <section class="slide">
@@ -105,7 +84,11 @@
     </section>
 
     <header class="slide">
-        <h1>Build a framework</h1>
+        <h1>What about the rest?</h1>
+    </header>
+
+    <header class="slide">
+        <h1><a href="https://github.com/jostsg/twoface">Build a framework!</a></h1>
     </header>
 
     <section class="slide">
@@ -116,10 +99,10 @@
     <section class="slide">
         <h2>Core</h2>
         <pre><code lang="javascript">{
-    module: function ( module ) {
-        module( /* sandbox */ );
+    module: function () {
+        /* inject sandbox */
     },
-    templates: function ( templatesDir ) {
+    templates: function () {
         /* register templates */
     },
     run: function () { /* start */ }
@@ -149,212 +132,318 @@ function myModule ( sandbox ) {
     </section>
 
     <section class="slide">
-        <h2>Server</h2>
-        <pre><code lang="javascript">module.exports.module = function ( module ) {
-    var sandbox = /* sandbox factory */;
+        <h2>Differences Core</h2>
+        <pre><code lang="javascript">// server
+function module ( module ) {
+    var sandbox = /* sandbox server */;
+    module( sandbox );
+}</code></pre>
+        <pre><code lang="javascript">// browser
+function module ( module ) {
+    var sandbox = /* sandbox browser */;
     module( sandbox );
 }</code></pre>
     </section>
 
     <section class="slide">
-        <!-- maintainable javascript -->
-        <blockquote>"Just because JavaScript is classless, doesn't mean you have to be" - Nicholas Zakas</blockquote>
+        <h2>Differences Core</h2>
+        <pre><code lang="javascript">// server
+function templates ( templatesDir ) {
+    // load files
+    // compile templates
+    // store
+    // setup access point for browser
+}</code></pre>
+        <pre><code lang="javascript">// no browser implementation</code></pre>
     </section>
 
     <section class="slide">
-        <blockquote>"Fake it, until you make it" - @noBackend</blockquote>
+        <h2>Differences Core</h2>
+        <pre><code lang="javascript">// server
+function run ( port ) {
+    // start server
+    server.listen( port || 3000 );
+}</code></pre>
+        <pre><code lang="javascript">// browser
+function run () {
+    // start page.js routing
+    page();
+}</code></pre>
     </section>
 
     <section class="slide">
-        <h2>History</h2>
+        <h2>Differences Sandbox</h2>
+        <pre><code lang="javascript">// server
+router.get = function ( pattern, callback ) {
+    // register callback on express.js
+    server.get( pattern, /* normalize callback */ )
+};
+</code></pre>
+        <pre><code lang="javascript">// browser
+router.get = function ( pattern, callback ) {
+    // register callback on page.js
+    page( pattern, /* normalize callback */ );
+};</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>Differences Sandbox</h2>
+        <pre><code lang="javascript">// server
+templates.render = function ( name, data ) {
+    var template = templates[ name ];
+    html = template( data ); // used when done()
+};
+</code></pre>
+        <pre><code lang="javascript">// browser
+templates.render = function ( name, data ) {
+    $.post( /* ... */ ).done( function ( html ) {
+        $( "#view" ).html( html )
+    });
+};</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>Differences Sandbox</h2>
+        <pre><code lang="javascript">// server
+http.get = function ( url, callback ) {
+    nodeHttp.get( url, function( res ) {
+        var data = "";
+        res.on( "data", function ( _data ) {
+            data += _data
+        });
+        res.on( "end", function () {
+            callback( null, data );
+        });
+    });
+};</code></pre>
+
+    </section>
+
+    <section class="slide">
+        <h2>Differences Sandbox</h2>
+        <pre><code lang="javascript">// browser
+http.get = function ( url, callback ) {
+    $.get( url ).done( function ( data ) {
+        callback( null, data );
+    });
+};</code></pre>
+    </section>
+
+    <header class="slide">
+        <h1><a href="https://github.com/jostsg/twoface/blob/master/examples/product/app.js">Build an app!</a></h1>
+        <!-- switch to live -->
+    </header>
+
+    <header class="slide">
+        <h1>Cachability</h1>
+    </header>
+
+    <header class="slide">
+        <h1>&lt;noscript/&gt;</h1>
+    </header>
+
+</section>
+
+<section>
+    <header class="slide chapter">
+        <h1>Modules</h1>
+        <!-- i want to publish my twoface app -->
+        <!-- i want to share the app -->
+        <!-- i want some structure -->
+        <!-- no globals -->
+        <!-- say you want an app store of two face apps -->
+    </header>
+
+    <header class="slide">
+        <h1>CommonJS</h1>
+        <!-- we like shared code now, so we have node.js -->
+        <!-- because it's on the server -->
+        <!-- this time the other way around -->
+    </header>
+
+    <section class="slide">
+        <h2>CommonJS</h2>
+        <pre class="delayed"><code lang="javascript">module.exports = {};</code></pre>
+        <pre class="delayed"><code lang="javascript">require( "./path/to/my/module" );</code></pre>
+        <pre class="delayed"><code lang="javascript">require( "path/to/node_module" );</code></pre>
+    </section>
+
+    <header class="slide">
+        <h1>Äh, browser?</h1>
+    </header>
+
+    <header class="slide">
+        <h1><a href="https://github.com/substack/node-browserify">Browserify!</a></h1>
+        <!-- lets make our app a module -->
+    </header>
+
+    <header class="slide">
+        <h1>Why not AMD?</h1>
+    </header>
+
+    <section class="slide">
+        <h2>Why not AMD?</h2>
         <ul>
-            <li class="delayed">I had to create a presentation for my talk at <a href="http://front-trends.com">Front Trends 2010</a></li>
-            <li class="delayed">The only web-based presentation systems I knew of didn't fit my needs</li>
-            <li class="delayed">&hellip;so I rolled up my own</li>
-            <li class="delayed">FT2010 attendees asked me to release it</li>
-            <li class="delayed">and here it is! ;-)</li>
+            <li class="delayed">"Personally I’m not a fan of AMD for one reason, <span class="emphasis">it’s ugly</span>." - @tjholowaychuk</li>
+            <li class="delayed">Recursive requests</li>
+            <li class="delayed">Node.js already has it</li>
+            <li class="delayed">Stick with one</li>
         </ul>
     </section>
-    
-    <section class="slide" id="navigation">
-        <h2>Navigation</h2>
-        <p>Only through keyboard for now :(</p>
+
+    <section class="slide">
+        <pre><code lang="javascript"> // AMD support
+  if (typeof define === 'function' && define.amd) {
+      define(function () { return MyModule; });
+  // CommonJS and Node.js module support.
+  } else if (typeof exports !== 'undefined') {
+      // Support Node.js specific `module.exports` (which can be a function)
+      if (typeof module != 'undefined' && module.exports) {
+          exports = module.exports = MyModule;
+      }
+      // But always support CommonJS module 1.1.1 spec (`exports` cannot be a function)
+      exports.MyModule = MyModule;
+  } else {
+      window.MyModule = Cookies;
+  }</code></pre>
+    </section>
+
+    <section class="slide">
+        <h2>What else?</h2>
         <ul>
-            <li>→ or ↓ to advance to the next slide or incrementally displayed item</li>
-            <li>← or ↑ to go to the previous slide or incrementally displayed item</li>
-            <li>Ctrl* + → or Ctrl* + ↓ to jump to the next slide</li>
-            <li>Ctrl* + ← or Ctrl* + ↑ to jump to the previous slide</li>
-            <li>Home to go to the first slide, End to go to the last</li>
-            <li>Ctrl* + G to jump to an arbitrary slide (by slide number or identifier)</li>
+            <li>Faster loading through eval</li>
+            <li>modules/+ModuleX-LibraryY (see <a href="http://www.youtube.com/watch?v=mGENRKrdoGY">talk</a>)</li>
         </ul>
-        <p>* Ctrl or Shift actually. Only Shift works in Opera.</p>
     </section>
 </section>
 
 <section>
-    <header class="slide">
-        <h1>Features</h1>
+    <header class="slide chapter">
+        <h1>Pkg Mgmt</h1>
     </header>
-    
+
+    <header class="slide">
+        <h1>NPM</h1>
+    </header>
+
     <section class="slide">
-        <h2>Thumbnail view</h2>
-        <p>Press Ctrl+H (or Shift+H if you're in Opera) now.</p>
-        <p class="delayed">Cool, huh? You can press Ctrl+Shift+H to see all slides (warning: can be slow!)</p>
+        <h2>package.json</h2>
+        <pre><code lang="javascript">{
+    "name": "some.js",
+    "version": "0.0.1",
+    "main": "./server.js",
+    "dependencies": {}
+}</code></pre>
     </section>
-    
+
+    <header class="slide">
+        <h1>Bower</h1>
+    </header>
+
     <section class="slide">
-        <h2>Timer</h2>
-        <ul>
-            <li>Timer in the form of a progress bar on the top</li>
-            <li>Define the talk duration with the attribute <code>data-duration</code> on the <code>body</code></li>
-            <li>Style the timer and the end state with the selectors <code>#timer</code> and <code>#timer.end</code> respectively.</li>
-        </ul>
+        <h2>bower.json</h2>
+        <pre><code lang="javascript">{
+    "name": "some.js",
+    "version": "0.0.1",
+    "main": "./client.js",
+    "dependencies": {}
+}</code></pre>
     </section>
-    
-    <section class="slide">
-        <h2>Presenter view</h2>
-        <p>This slide has presenter notes. They are only visible in presenter view (Ctrl+P or Shift+P).</p>
-        <p class="presenter-notes">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </section>
-    
-    <section class="slide">
-        <style scoped>
-            h2 {
-                font-size: 200%;
-                font-weight: bold;
-            }
-        </style>
-        <h2><code>&lt;style scoped /&gt;</code></h2>
-        <p>You can use the HTML5 <code>scoped</code> attribute on style elements in slides, to only style the current slide or inside sections that include multiple slides to style all of them and nothing else.</p>
-        <p>For example, inspect this slide and then run <code>$$('style[scoped]')[0].sheet.cssRules[0].selectorText</code> in the console to see how the original selector gets changed.</p>
-    </section>
-    
-    <section class="slide">
-        <h2>More features</h2>
-        <ul>
-            <li class="delayed">IDs are dynamically assigned by JavaScript&hellip;</li>
-            <li class="delayed">&hellip;but you can also assign your own, bringing the best of both worlds</li>
-            <li class="delayed">Incremental display of slide contents (just add <code>class="delayed"</code>)</li>
-            <li class="delayed">Slide scaling based on window size (size everything you want to be scalable in ems)</li>
-            <li class="delayed">Document.title changing according to slide title (fetched either from the <code>title</code> attribute or the slide's heading)</li>
-        </ul>
-    </section>
-    
-    <section class="slide">
-        <h2>Drawbacks</h2>
-        <ul>
-            <li>Only supports modern browsers. Why?
-                <ul>
-                    <li>More lightweight</li>
-                    <li>Easier to understand code</li>  
-                    <li>It's a presentation, so the environment is controlled anyway</li>
-                </ul>
-            </li>
-            <li>No mouse click to advance to the next slide. I consider it annoying.</li>
-            <li>Doesn't work in mobile :(</li>
-        </ul>
-    </section>
+
+    <!-- both work with git urls -->
 </section>
 
 <section>
-    <header class="slide">
-        <h1>Plugins</h1>
+    <header class="slide chapter">
+        <h1>Unit Tests</h1>
+        <!-- unless you follow a no bug policy -->
+        <!-- this could be a whole talk, so only appetizer -->
     </header>
-    
-    <section class="slide">
-        <h2>Plugin: CSS Snippets</h2>
-        <pre>new CSSSnippet(document.getElementById('snippet'));</pre>
-        <ul>
-            <li>Dynamically edit CSS and reflect the results in any element's style
-                <ul>
-                    <li>Which one? Specify a selector with the <code>data-subject</code> attribute or leave blank for the slide to be the subject</li>
-                </ul>
-            <li>Automatically prefixes CSS3 properties/values, when needed
-                <ul>
-                    <li>Also does it with the style attribute (statically) if the element is not a text field (doesn't work in IE and Firefox 3.6)</li>
-                </ul>
-            </li>
-            <li>Textarea automatically adjusts rows/font-size on line break (use class <code>dont-adjust</code> to turn off)</li>
-        </ul>
-    </section>
-    
-    <section class="slide">
-        <h2>CSS Snippets demo</h2>
-        <p>Edit the following CSS code:</p>
-        <textarea class="snippet">background-color:red;
-background-image: linear-gradient(red, #600)</textarea>
-    </section>
-    
-    <section class="slide" id="animation-demo">
-        <h2>CSS Snippets: raw CSS</h2>
-        <textarea class="snippet" data-raw>@keyframes rainbow {
-    from, to { background: red }
-    16% { background: yellow }
-    33% { background: green }
-    50% { background: aqua }
-    66% { background: blue }
-    83% { background: fuchsia }
-}
 
-#animation-demo { animation: 30s rainbow infinite; }</textarea>
-    </section>
-    
     <section class="slide">
-        <h2>Plugin: CSS Controls</h2>
+        <h2>Tools of the Trade</h2>
         <ul>
-            <li>Use sliders and other controls to adjust CSS values
-                <ul>
-                    <li>Which one? Specify a selector with the <code>data-subject</code> attribute or leave blank for the slide to be the subject</li>
-                    <li>Specify style with <code>data-style</code> (use <code>{value}</code> where the result will be)</li>
-                </ul>
-            <li>Automatically prefixes CSS3 properties/values, when needed</li>
+            <li class="delayed">Mocha (Test Framework)</li>
+            <li class="delayed">Chai (Assertion Library)</li>
+            <li class="delayed">Sinon (Spies, Stubs &amp; Mocks)</li>
+            <li class="delayed">Karma (Test Runner)</li>
         </ul>
     </section>
-    
-    <section class="slide" id="css-controls-demo">
-        <h2>CSS Controls demo</h2>
-        <label>Slide lightness: 
-            <input type="range" min="0" max="255" value="128" data-style="background-color:rgb({value}, {value}, {value});" class="css-control" />
-        </label>
-        <label>
-            border-width:
-            <input type="number" min="0" max="60" value="30" data-style="border-width: {value}px;" class="css-control" size="5" />
-        </label>
-        <label>
-            font-family:
-            <select data-style="font-family: {value};" class="css-control">
-                <option selected>sans-serif</option>
-                <option>Georgia, serif</option>
-                <option>Consolas, monospace</option>
-                <option>'Trebuchet MS', sans-serif</option>
-            </select>
-        </label>
-    </section>
-    
+
     <section class="slide">
-        <h2>Plugin: Code highlight</h2>
+        <h2>Syntax</h2>
+        <pre><code lang="javascript">describe( "Module", function () {
+    describe( "#someMethod()", function() {
+        it( "should do well", function () {
+            assert( /* smth better than true */ );
+        });
+    });
+});</code></pre>
+    </section>
+
+    <!-- switch to live -->
+    <!-- introduce grunt-init template -->
+
+    <header class="slide">
+        <h1>Automation</h1>
+    </header>
+
+    <section class="slide">
+        <h2>Automation</h2>
         <ul>
-            <li>Syntax highlighting for every <code>&lt;code&gt;</code> element with a <code>lang</code> attribute.</li>
-            <li>Only highlights when the slide becomes active, for performance</li>
-            <li>Currently only supports JavaScript, but it's easy to add any language</li>
-            <li>Styling done through easy to understand classes like <code>.string</code> or <code>.comment</code></li>
+            <li class="delayed"><a href="https://drone.io/">drone.io</a></li>
+            <li class="delayed"><a href="https://travis-ci.org/">Travis</a></li>
+            <li class="delayed"><a href="http://jenkins-ci.org/">Jenkins</a></li>
         </ul>
     </section>
-    
+
+</section>
+
+<section>
+    <header class="slide chapter">
+        <h1>Publish</h1>
+    </header>
+
+    <!-- publish to github -->
+    <!-- set tag -->
+    <!-- use in product with "save"-->
+</section>
+
+<section>
+    <header class="slide chapter">
+        <h1>A few more things...</h1>
+    </header>
+
+    <header class="slide">
+        <h1>Logging</h1>
+    </header>
+
+    <header class="slide">
+        <h1>Reduce the Pain</h1>
+        <!-- take your time to setup the tools -->
+        <!-- grunt, grunt-init, livereload, snippets -->
+    </header>
+
     <section class="slide">
-        <h2>Code highlight example</h2>
-        <pre><code lang="javascript">$( "body" ).addClass( "roll" );</code><code>$( "body" ).addClass( "roll" );</code></pre>
+        <h2>Tools</h2>
+        <ul>
+            <li class="delayed">@noBackend (<a href="http://hood.ie/">hood.ie</a>, <a href="https://www.firebase.com/">firebase</a>)</li>
+            <!-- fake it, until you make it -->
+            <li class="delayed">LiveReload</li>
+            <li class="delayed">Grunt.js</li>
+            <li class="delayed">Snippets</li>
+            <li class="delayed">Containers (<a href="http://www.docker.io/">docker</a>)</li>
+        </ul>
     </section>
 </section>
-<footer class="slide" title="The End">
-    <h2>Thank you!</h2>
-    <p>Get it or contribute at <a href="http://github.com/LeaVerou/CSSS">http://github.com/LeaVerou/CSSS</a></p>
-    <p>Credits:</p>
-    <ul>
-        <li><a href="http://lukeroberts.us/2008/12/wallpaper-colourful-wood/">Colored wood background by Luke Roberts</a></li>
-        <li>The name CSSS is actually inspired by S5, as you could probably guess ;-)</li>
-        <li>A big thanks to the community at Github for various contributions to this project</li>
-    </ul>
+
+<footer>
+    <header class="slide">
+        <pre class="header__code"><code lang="javascript">JS.everywhere();</code></pre>
+    </header>
+    <header class="slide">
+        <pre class="header__code"><code lang="javascript">JS.everywhere( false );</code></pre>
+    </header>
 </footer>
 
 <script src="slideshow.js"></script>
