@@ -23,6 +23,7 @@
     <header class="slide" title="JavaScript">
         <h1 id="h_accessible">It's accessible</h1>
         <script>window.roll = function() { document.getElementById( "h_accessible" ).className += "roll" }</script>
+        <p class="presenter-notes">roll();</p>
     </header>
 
     <header class="slide">
@@ -35,9 +36,10 @@
 
     <header class="slide">
         <pre class="header__code"><code lang="javascript">JS.everywhere();</code></pre>
-        <!-- obvious question:
-             when we have it to use in one place, can we use it in the other?
-             can we replace server-side rendering and do it ? -->
+        <ul class="presenter-notes">
+            <li>obvious question: when we have it to use in one place, can we use it in the other?</li>
+            <li>can we replace server-side rendering (PHP/Ruby)?</li>
+        </ul>
     </header>
 
     <section class="slide">
@@ -47,12 +49,15 @@
 
     <header class="slide chapter">
         <h1>Shared Code</h1>
-        <!-- Run Code on server & in the browser -->
+        <ul class="presenter-notes">
+            <li>Run Code on server &amp; in the browser</li>
+            <li>Next: Just run through Node.js</li>
+        </ul>
     </header>
 
     <header class="slide">
         <blockquote>"Just run the code through Node.js" - Simon Jost</blockquote>
-        <!-- Naive me in 2011 -->
+        <p class="presenter-notes">Naive me in 2011</p>
     </header>
 
     <section class="slide">
@@ -61,16 +66,29 @@
             <li class="delayed">Routing</li>
             <li class="delayed">Requests</li>
             <li class="delayed">Rendering</li>
+            <li class="delayed">Module System</li>
             <li class="delayed">DOM</li>
+        </ul>
+        <ul class="presenter-notes">
+            <li>Same API server &amp; client-side</li>
+            <li>Client-side routing</li>
+            <li>HTTP vs. XHR</li>
+            <li>Server side rendering has to be done at some point, NOT ASYNC</li>
+            <li>CommonJS</li>
+            <li>No DOM server-side</li>
+            <li>Next: Bullshit</li>
         </ul>
     </section>
 
     <section class="slide">
         <h2>Server-side DOM</h2>
         <div class="center"><img src="img/bullshit.jpg" /></div>
-        <!-- it's bullshit, because it's slow
-             but it's less complex for app devs -->
-        <!-- DOM introduces a server-side global -->
+        <ul class="presenter-notes">
+            <li>it's bullshit, because it's slow, and we have the choice in node.js</li>
+            <li>but it's less complex for app devs</li>
+            <li>DOM introduces a server-side global</li>
+            <li>Next: But if you need it... server-side DOM links</li>
+        </ul>
     </section>
 
     <section class="slide">
@@ -81,14 +99,19 @@
             <li>jsdom: <a href="https://github.com/tmpvar/jsdom">https://github.com/tmpvar/jsdom</a></li>
             <li>PhantomJS: <a href="http://phantomjs.org/">http://phantomjs.org/</a></li>
         </ul>
+        <ul class="presenter-notes">
+            <li>What about the Rest?</li>
+            <li>Next: Build a framework!</li>
+        </ul>
     </section>
 
     <header class="slide">
-        <h1>What about the rest?</h1>
-    </header>
-
-    <header class="slide">
         <h1><a href="https://github.com/jostsg/twoface">Build a framework!</a></h1>
+        <ul class="presenter-notes">
+            <li>You need abstractions</li>
+            <li>You only want to do them once</li>
+            <li>Next: Architecture Diagram</li>
+        </ul>
     </header>
 
     <section class="slide">
@@ -227,19 +250,39 @@ http.get = function ( url, callback ) {
         callback( null, data );
     });
 };</code></pre>
+        <ul class="presenter-notes">
+            <li>Summarize: Abstractions on Sandbox to pass to an App</li>
+        </ul>
     </section>
 
     <header class="slide">
         <h1><a href="https://github.com/jostsg/twoface/blob/master/examples/product/app.js">Build an app!</a></h1>
-        <!-- switch to live -->
+        <ul class="presenter-notes">
+            <li>switch to live</li>
+            <li>we can not quite run it yet, the connection is missing</li>
+            <li>We gained more, next: Speed, Cachability &amp; noscript</li>
+        </ul>
+    </header>
+
+    <header class="slide">
+        <h1>Speed</h1>
+        <ul class="presenter-notes">
+            <li>Pre-rendered HTML</li>
+        </ul>
     </header>
 
     <header class="slide">
         <h1>Cachability</h1>
+        <ul class="presenter-not">
+            <li>CDN</li>
+        </ul>
     </header>
 
     <header class="slide">
         <h1>&lt;noscript/&gt;</h1>
+        <ul class="presenter-notes">
+            <li>What's good for Google, is good for every non-js agent</li>
+        </ul>
     </header>
 
 </section>
@@ -247,18 +290,24 @@ http.get = function ( url, callback ) {
 <section>
     <header class="slide chapter">
         <h1>Modules</h1>
-        <!-- i want to publish my twoface app -->
-        <!-- i want to share the app -->
-        <!-- i want some structure -->
-        <!-- no globals -->
-        <!-- say you want an app store of two face apps -->
+        <ul class="presenter-notes">
+            <li>Node.js has one</li>
+            <li>i want to publish my twoface app</li>
+            <li>i want to share the app</li>
+            <li>i want some structure</li>
+            <li>no globals</li>
+            <li>say you want an app store of two face apps</li>
+            <li>Which one to go with, next: CommonJS proposal</li>
+        </ul>
     </header>
 
     <header class="slide">
         <h1>CommonJS</h1>
-        <!-- we like shared code now, so we have node.js -->
-        <!-- because it's on the server -->
-        <!-- this time the other way around -->
+        <ul>
+            <li>we like shared code now, so we have node.js</li>
+            <li>this time the other way around, it's already in Node.js</li>
+            <li>Next: Common JS API</li>
+        </ul>
     </header>
 
     <section class="slide">
@@ -266,6 +315,9 @@ http.get = function ( url, callback ) {
         <pre class="delayed"><code lang="javascript">module.exports = {};</code></pre>
         <pre class="delayed"><code lang="javascript">require( "./path/to/my/module" );</code></pre>
         <pre class="delayed"><code lang="javascript">require( "path/to/node_module" );</code></pre>
+        <ul class="presenter-notes">
+            <li>Next: Äh, browser?</li>
+        </ul>
     </section>
 
     <header class="slide">
@@ -274,19 +326,25 @@ http.get = function ( url, callback ) {
 
     <header class="slide">
         <h1><a href="https://github.com/substack/node-browserify">Browserify!</a></h1>
-        <!-- lets make our app a module -->
+        <ul class="presenter-notes">
+            <li>Lets make our app a module</li>
+            <li>Next: Why not AMD?</li>
+        </ul>
     </header>
 
     <header class="slide">
         <h1>Why not AMD?</h1>
+        <ul class="presenter-notes">
+            <li>Everybody aware of RequireJS?</li>
+        </ul>
     </header>
 
     <section class="slide">
         <h2>Why not AMD?</h2>
         <ul>
             <li class="delayed">"Personally I’m not a fan of AMD for one reason, <span class="emphasis">it’s ugly</span>." - @tjholowaychuk</li>
+            <li class="delayed">Node.js uses CommonJS</li>
             <li class="delayed">Recursive requests</li>
-            <li class="delayed">Node.js already has it</li>
             <li class="delayed">Stick with one</li>
         </ul>
     </section>
@@ -306,6 +364,9 @@ http.get = function ( url, callback ) {
   } else {
       window.MyModule = Cookies;
   }</code></pre>
+        <ul class="presenter-notes">
+            <li>Next: What else?</li>
+        </ul>
     </section>
 
     <section class="slide">
@@ -349,15 +410,16 @@ http.get = function ( url, callback ) {
     "dependencies": {}
 }</code></pre>
     </section>
-
-    <!-- both work with git urls -->
 </section>
 
 <section>
     <header class="slide chapter">
         <h1>Unit Tests</h1>
-        <!-- unless you follow a no bug policy -->
-        <!-- this could be a whole talk, so only appetizer -->
+        <ul class="presenter-notes">
+            <li>unless you follow a no bug policy</li>
+            <li>this could be a whole talk, so only appetizer</li>
+            <li>Next: Tools of the Trade</li>
+        </ul>
     </header>
 
     <section class="slide">
@@ -367,6 +429,11 @@ http.get = function ( url, callback ) {
             <li class="delayed">Chai (Assertion Library)</li>
             <li class="delayed">Sinon (Spies, Stubs &amp; Mocks)</li>
             <li class="delayed">Karma (Test Runner)</li>
+        </ul>
+        <ul class="presenter-notes">
+            <li>Other framework like Jasmine</li>
+            <li>Runners like Testling</li>
+            <li>Next: Syntax</li>
         </ul>
     </section>
 
@@ -379,13 +446,21 @@ http.get = function ( url, callback ) {
         });
     });
 });</code></pre>
+        <ul class="presenter-notes">
+            <li>Switch to live, add a test for the app</li>
+            <li>Introduce grunt-init template</li>
+        </ul>
     </section>
-
-    <!-- switch to live -->
-    <!-- introduce grunt-init template -->
 
     <header class="slide">
         <h1>Automation</h1>
+        <ul class="presenter-notes">
+            <li>Is important, otherwise tests won't be maintained</li>
+            <li>You can add badges to your version tool, GitHub</li>
+            <li>Run the tests in several browsers</li>
+            <li>Everything is green, everything is good</li>
+            <li>Next: Automation choices</li>
+        </ul>
     </header>
 
     <section class="slide">
@@ -395,18 +470,31 @@ http.get = function ( url, callback ) {
             <li class="delayed"><a href="https://travis-ci.org/">Travis</a></li>
             <li class="delayed"><a href="http://jenkins-ci.org/">Jenkins</a></li>
         </ul>
+        <ul class="presenter-notes">
+            <li>Next: UI Testing choices</li>
+        </ul>
     </section>
 
+    <header class="slide">
+        <h1><a href="http://dalekjs.com/">DalekJS</a></h1>
+        <ul class="presenter-notes">
+            <li>Next: Publish</li>
+        </ul>
+    </header>
 </section>
 
 <section>
     <header class="slide chapter">
         <h1>Publish</h1>
+        <ul class="presenter-notes">
+            <li>Publish to GitHub</li>
+            <li>Set tag</li>
+            <li>Use in product (with --save)</li>
+        </ul>
+        <ul class="presenter-notes">
+            <li>Next: few more things, Logging &amp; tools</li>
+        </ul>
     </header>
-
-    <!-- publish to github -->
-    <!-- set tag -->
-    <!-- use in product with "save"-->
 </section>
 
 <section>
@@ -416,12 +504,18 @@ http.get = function ( url, callback ) {
 
     <header class="slide">
         <h1>Logging</h1>
+        <ul class="presenter-notes">
+            <li>Client-side logging, otherwise you won't know what's happening</li>
+            <li>Server-side is cached, so no logs</li>
+        </ul>
     </header>
 
     <header class="slide">
         <h1>Reduce the Pain</h1>
-        <!-- take your time to setup the tools -->
-        <!-- grunt, grunt-init, livereload, snippets -->
+        <ul class="presenter-notes">
+            <li>take your time to setup your tools</li>
+            <li>Next: grunt, grunt-init, livereload, snippets</li>
+        </ul>
     </header>
 
     <section class="slide">
@@ -432,7 +526,13 @@ http.get = function ( url, callback ) {
             <li class="delayed">LiveReload</li>
             <li class="delayed">Grunt.js</li>
             <li class="delayed">Snippets</li>
-            <li class="delayed">Containers (<a href="http://www.docker.io/">docker</a>)</li>
+            <li class="delayed">VM/Container (<a href="http://www.docker.io/">docker</a>)</li>
+        </ul>
+        <ul class="presenter-notes">
+            <li>LiveReload &amp; Grunt.js for automated building and refreshing, remember browserify...</li>
+            <li>Sublime Snippets like "desc" &amp; "it" for testing</li>
+            <li>Containers: Biggest pain/frustration to set up the whole environment, too much can go wrong</li>
+            <li>Next: JS.everywhere( false );</li>
         </ul>
     </section>
 </section>
