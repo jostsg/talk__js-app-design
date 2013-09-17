@@ -12,7 +12,7 @@
 </head>
 <body data-duration="90">
 
-<header id="intro" class="slide">
+<header id="intro" class="slide chapter">
     <h1>JavaScript</h1>
 </header>
 
@@ -28,6 +28,9 @@
 
     <header class="slide">
         <h1>It's in the browser</h1>
+        <ul class="presenter-notes">
+            <li>Next: "Alternativlos"</li>
+        </ul>
     </header>
 
     <header class="slide">
@@ -37,7 +40,7 @@
     <header class="slide">
         <pre class="header__code"><code lang="javascript">JS.everywhere();</code></pre>
         <ul class="presenter-notes">
-            <li>obvious question: when we have it to use in one place, can we use it in the other?</li>
+            <li>obvious question: when we have it in one place, can we use it in the other?</li>
             <li>can we replace server-side rendering (PHP/Ruby)?</li>
         </ul>
     </header>
@@ -85,7 +88,7 @@
         <div class="center"><img src="img/bullshit.jpg" /></div>
         <ul class="presenter-notes">
             <li>it's bullshit, because it's slow, and we have the choice in node.js</li>
-            <li>but it's less complex for app devs</li>
+            <li>less complex for app devs</li>
             <li>DOM introduces a server-side global</li>
             <li>Next: But if you need it... server-side DOM links</li>
         </ul>
@@ -105,7 +108,7 @@
         </ul>
     </section>
 
-    <header class="slide">
+    <header class="slide chapter">
         <h1><a href="https://github.com/jostsg/twoface">Build a framework!</a></h1>
         <ul class="presenter-notes">
             <li>You need abstractions</li>
@@ -252,10 +255,13 @@ http.get = function ( url, callback ) {
 };</code></pre>
         <ul class="presenter-notes">
             <li>Summarize: Abstractions on Sandbox to pass to an App</li>
+            <li>Framework already exists - TwoFace only for this purpose</li>
+            <li>Give a rough overview of the implementation</li>
+            <li>Mention other solutions, like Rendr &amp; Tready.js</li>
         </ul>
     </section>
 
-    <header class="slide">
+    <header class="slide chapter">
         <h1><a href="https://github.com/jostsg/twoface/blob/master/examples/product/app.js">Build an app!</a></h1>
         <ul class="presenter-notes">
             <li>switch to live</li>
@@ -273,7 +279,7 @@ http.get = function ( url, callback ) {
 
     <header class="slide">
         <h1>Cachability</h1>
-        <ul class="presenter-not">
+        <ul class="presenter-notes">
             <li>CDN</li>
         </ul>
     </header>
@@ -303,7 +309,7 @@ http.get = function ( url, callback ) {
 
     <header class="slide">
         <h1>CommonJS</h1>
-        <ul>
+        <ul class="presenter-notes">
             <li>we like shared code now, so we have node.js</li>
             <li>this time the other way around, it's already in Node.js</li>
             <li>Next: Common JS API</li>
@@ -362,7 +368,7 @@ http.get = function ( url, callback ) {
       // But always support CommonJS module 1.1.1 spec (`exports` cannot be a function)
       exports.MyModule = MyModule;
   } else {
-      window.MyModule = Cookies;
+      window.MyModule = MyModule;
   }</code></pre>
         <ul class="presenter-notes">
             <li>Next: What else?</li>
@@ -409,6 +415,10 @@ http.get = function ( url, callback ) {
     "main": "./client.js",
     "dependencies": {}
 }</code></pre>
+        <ul class="presenter-notes">
+            <li>Add manifest to app</li>
+            <li>Add dependency to product</li>
+        </ul>
     </section>
 </section>
 
@@ -431,7 +441,7 @@ http.get = function ( url, callback ) {
             <li class="delayed">Karma (Test Runner)</li>
         </ul>
         <ul class="presenter-notes">
-            <li>Other framework like Jasmine</li>
+            <li>Other frameworks like Jasmine</li>
             <li>Runners like Testling</li>
             <li>Next: Syntax</li>
         </ul>
@@ -447,7 +457,7 @@ http.get = function ( url, callback ) {
     });
 });</code></pre>
         <ul class="presenter-notes">
-            <li>Switch to live, add a test for the app</li>
+            <li>Switch to live, add a test to the app</li>
             <li>Introduce grunt-init template</li>
         </ul>
     </section>
@@ -490,8 +500,6 @@ http.get = function ( url, callback ) {
             <li>Publish to GitHub</li>
             <li>Set tag</li>
             <li>Use in product (with --save)</li>
-        </ul>
-        <ul class="presenter-notes">
             <li>Next: few more things, Logging &amp; tools</li>
         </ul>
     </header>
@@ -537,14 +545,26 @@ http.get = function ( url, callback ) {
     </section>
 </section>
 
-<footer>
+<section>
     <header class="slide">
         <pre class="header__code"><code lang="javascript">JS.everywhere();</code></pre>
     </header>
     <header class="slide">
         <pre class="header__code"><code lang="javascript">JS.everywhere( false );</code></pre>
+        <ul class="presenter-notes">
+            <li>Use what's right for the job</li>
+            <li>Fake it, until you make it</li>
+            <li>Be aware of the skills of your developers</li>
+            <li>Next: Thank you!</li>
+        </ul>
     </header>
-</footer>
+</section>
+
+<section>
+    <header class="slide">
+        <h1>Thank you!</h1>
+    </header>
+</section>
 
 <script src="slideshow.js"></script>
 <script src="plugins/css-edit.js"></script>

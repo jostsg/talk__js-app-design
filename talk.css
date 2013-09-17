@@ -44,9 +44,9 @@
 .center { text-align: center }
 
 section > header.chapter {
-	font-weight: bold;
 	background: none;
-	background-color: none;
+	color: #000;
+	background-color: #fff;
 }
 
 .header__code {
